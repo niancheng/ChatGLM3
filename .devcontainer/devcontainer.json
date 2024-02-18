@@ -1,0 +1,104 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "ChatGLM3",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	// "image": "hub.okii.com/watch-ai/devcontainer/python:3.12.1-debian12",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"context": ".",
+		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+		"dockerfile": "Dockerfile",
+		"args": {
+			// "http_proxy": "http://172.28.184.184:7890",
+			// "https_proxy": "http://172.28.184.184:7890"
+		}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {
+	// 	// "ghcr.nju.edu.cn/devcontainers/features/nvidia-cuda:1": {
+	// 	// 	"cudaVersion": "10.0.130",
+	// 	// 	"cudnnVersion": "7.6.2.24"
+	// 	// }
+	// 	// "ghcr.nju.edu.cn/devcontainers/features/node:1": "none",
+	// 	// "ghcr.nju.edu.cn/devcontainers/features/python:1": "none",
+	// 	"ghcr.nju.edu.cn/devcontainers/features/common-utils:2":{
+    //         "installZsh": "false",
+	// 		"installOhMyZsh": "false",
+	// 		"installOhMyZshConfig": "false",
+    //         "username": "vscode",
+    //         "userUid": "1000",
+    //         "userGid": "1000",
+	// 		// 默认upgradePackages=true会导致cudnn丢失
+    //         "upgradePackages": "false"
+    //     },
+    //     "ghcr.nju.edu.cn/devcontainers/features/git:1": {},
+	// 	"ghcr.nju.edu.cn/devcontainers/features/docker-outside-of-docker:1": {
+	// 		"version": "latest",
+	// 		"enableNonRootDocker": "true",
+	// 		"moby": "true"
+	// 	}
+	// },
+
+	// https://containers.dev/implementors/json_reference/#min-host-reqs
+	"hostRequirements": {
+		"cpus":2,
+		"memory": "4gb",
+		"gpu": "optional" 
+	},
+
+	"runArgs": [
+		// "--cpus", "20",
+		"--name", "vsc-chatglm3"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// port或"ip:port"
+	// "forwardPorts": [9100],
+
+	// docker -p参数
+	// "appPort": ["19107:9100"],
+
+	"initializeCommand": "cp requirements.txt .devcontainer/requirements.txt",
+	
+	"onCreateCommand": {
+		"pip.trusted-host": "pip config set global.trusted-host mirrors.bbkedu.com",
+		"pip.index-url": "pip config set global.index-url http://mirrors.bbkedu.com/pypi/simple"
+	},
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": {
+		// "pip.install": "pip install --disable-pip-version-check --no-cache-dir --retries 10 -U -r requirements.txt"
+	},
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// "ms-python.python",
+				// "ms-python.vscode-pylance"
+			],
+			"settings": {
+				// "python.defaultInterpreterPath": "/bin/python",
+				// "http.proxy": "http://172.28.184.184:7890",
+				// "https.proxy": "http://172.28.184.184:7890",
+				"http.proxyStrictSSL": false,
+				"https.proxyStrictSSL": false
+			}
+		}
+	},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "vscode",
+
+	"remoteEnv": {
+		"http_proxy": "http://172.28.184.184:7890",
+		"https_proxy": "http://172.28.184.184:7890"
+	},
+
+	"containerEnv": {
+		// "http_proxy": "http://172.28.184.184:7890",
+		// "https_proxy": "http://172.28.184.184:7890"
+	}
+}

@@ -29,7 +29,15 @@ st.set_page_config(
 def get_model():
 
     tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_PATH, trust_remote_code=True)
-    model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True, device_map="auto").eval()
+    # 自动使用GPU
+    # model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True, device_map="auto").eval()
+    # 指定GPU
+    # device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    # model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True).eval()
+    # 指定CPU，只能使用单核
+    # model = model.to(torch.device('cpu'))
+    # 使用多核CPU
+    model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True).float()
     return tokenizer, model
 
 
